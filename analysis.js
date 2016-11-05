@@ -12,22 +12,6 @@ function countX(char){
     return count;
 }
 
-function countAll(){
-    /* -> array of int
-    counts all relevant characters (A,C,G) and T for DNA and U for RNA
-    returns counts as array in alphabetical order
-    does not return irrelevant counts (i.e. DNA won't return 0 count for U)
-    */
-    var count_list = [this.countX('A'), this.countX('C'), this.countX('G')];
-    if (this.is_RNA){
-        count_list.push(this.countX('U'));
-    }
-    else {
-        count_list.push(this.countX('T'));
-    }
-    return count_list;
-}
-
 function is_RNA(){
     /* -> boolean
     returns true if RNA, false if DNA
@@ -37,6 +21,22 @@ function is_RNA(){
         return false;
     }
     else return true;
+}
+
+function countAll(){
+    /* -> array of int
+    counts all relevant characters (A,C,G) and T for DNA and U for RNA
+    returns counts as array in alphabetical order
+    does not return irrelevant counts (i.e. DNA won't return 0 count for U)
+    */
+    var count_list = [this.countX('A'), this.countX('C'), this.countX('G')];
+    if (this.is_RNA() == true){
+        count_list.push(this.countX('U'));
+    }
+    else {
+        count_list.push(this.countX('T'));
+    }
+    return count_list;
 }
 
 function show_RNA(DNA){
