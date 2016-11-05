@@ -12,6 +12,22 @@ function countX(char){
     return count;
 }
 
+function countAll(){
+    /* -> array of int
+    counts all relevant characters (A,C,G) and T for DNA and U for RNA
+    returns counts as array in alphabetical order
+    does not return irrelevant counts (i.e. DNA won't return 0 count for U)
+    */
+    var count_list = [this.countX('A'), this.countX('C'), this.countX('G')];
+    if (this.is_RNA){
+        count_list.push(this.countX('U'));
+    }
+    else {
+        count_list.push(this.countX('T'));
+    }
+    return count_list;
+}
+
 function is_RNA(){
     /* -> boolean
     returns true if RNA, false if DNA
@@ -45,17 +61,11 @@ function to_RNA(){
 function basic(DNA){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
-    DNA is a string containing many of A,C,G, & T and nothing more (no id)
-    Properties:
-    Count of total
-    DNA or RNA?
-    if DNA
-        Count for each of A,C,G,T
-    else if RNA
-        Count for each of A,C,G,U
+    DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
     */
     this.length = DNA.length;
     this.countX = countX;
+    this.countAll = countAll;
     this.DNA = DNA;
     this.RNA = show_RNA(DNA);
     this.to_RNA = to_RNA;
