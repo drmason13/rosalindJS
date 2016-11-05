@@ -58,7 +58,7 @@ function to_RNA(){
     this.DNA = this.RNA;
 }
 
-function basic(DNA){
+function basic(DNA, id = 0){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
     DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
@@ -70,4 +70,5 @@ function basic(DNA){
     this.RNA = show_RNA(DNA);
     this.to_RNA = to_RNA;
     this.is_RNA = is_RNA;
+    this.id = id;
 }
