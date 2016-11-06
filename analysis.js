@@ -11,7 +11,7 @@ function countX(char){
     var i = 0;
     var count = 0;
     for (i = 0; i < this.length; i++) {
-        if (this.DNA.charAt(i).toUpperCase() == char){
+        if (this.string.charAt(i).toUpperCase() == char){
             count ++;
         }
     }
@@ -19,14 +19,14 @@ function countX(char){
 }
 
 function is_RNA(){
-    /* -> boolean
-    returns true if RNA, false if DNA
+    /* -> string
+    returns "DNA" or "RNA" as appropriate.
     check is based on presence of T (DNA) and absence of U (RNA)
     */
     if (this.countX('U') == 0 & this.countX('T') > 0){
-        return false;
+        return "DNA";
     }
-    else return true;
+    else return "RNA";
 }
 
 function countAll(){
@@ -36,39 +36,69 @@ function countAll(){
     does not return irrelevant counts (i.e. DNA won't return 0 count for U)
     */
     var count_list = [this.countX('A'), this.countX('C'), this.countX('G')];
-    if (this.is_RNA() == true){
+    if (this.type == "RNA"){
         count_list.push(this.countX('U'));
     }
-    else {
+    else if (this.type == "DNA"){
         count_list.push(this.countX('T'));
     }
     return count_list;
 }
 
-function show_RNA(DNA){
+function to_RNA(){
         /* str -> str
     Returns DNA with all instances of 'T' replaced with 'U'
     */
-    var i = 0;
-    var current = '';
-    var RNA = [];
-    for (i = 0; i < DNA.length; i++) {
-        current = DNA.charAt(i).toUpperCase();
-        if (current == 'T'){
-            RNA.push('U');
+    if (this.type == "DNA"){
+        var i = 0;
+        var current = '';
+        var RNA = [];
+        for (i = 0; i < this.string.length; i++) {
+            current = this.string.charAt(i).toUpperCase();
+            if (current == 'T'){
+                RNA.push('U');
+            }
+            else {
+                RNA.push(current);
+            }
         }
-        else {
-            RNA.push(current);
-        }
+        this.string = RNA.join('');
+        this.type = "RNA";
     }
-    return RNA.join('');
 }
 
-function to_RNA(){
-    this.DNA = this.RNA;
+function to_DNA(){
+        /* str -> str
+    Returns DNA with all instances of 'T' replaced with 'U'
+    */
+    if (this.type == "RNA"){
+        var i = 0;
+        var current = '';
+        var DNA = [];
+        for (i = 0; i < this.string.length; i++) {
+            current = this.string.charAt(i).toUpperCase();
+            if (current == 'U'){
+                DNA.push('T');
+            }
+            else {
+                DNA.push(current);
+            }
+        }
+        this.string = DNA.join('');
+        this.type = "DNA";
+    }
 }
 
-exports.basic = function basic(DNA, id){
+function toggle_RNA(){
+    if (this.type == "DNA"){
+        this.to_RNA();
+    }
+    else if (this.type == "RNA"){
+        this.to_DNA();
+    }
+}
+
+exports.basic = function basic(string, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
     DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
@@ -77,12 +107,17 @@ exports.basic = function basic(DNA, id){
     if (id == undefined) {
         id = 0;
     }
-    this.length = DNA.length;
+    //methods
     this.countX = countX;
     this.countAll = countAll;
-    this.DNA = DNA;
-    this.RNA = show_RNA(DNA);
+    this.test_type = is_RNA;
     this.to_RNA = to_RNA;
-    this.is_RNA = is_RNA;
+    this.to_DNA = to_DNA;
+    this.toggle_RNA = toggle_RNA;
     this.id = id;
+    
+    //properties
+    this.string = string;
+    this.length = string.length;
+    this.type = this.test_type(string);
 };
