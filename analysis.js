@@ -18,7 +18,7 @@ function countX(char){
     return count;
 }
 
-function is_RNA(){
+function test_type(){
     /* -> string
     returns "DNA" or "RNA" as appropriate.
     check is based on presence of T (DNA) and absence of U (RNA)
@@ -104,13 +104,13 @@ exports.basic = function basic(string, id){
     DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
     id is optionally supplied separately as second argument.
     */
-    if (id == undefined) {
+    if (id == undefined){
         id = 0;
     }
     //methods
     this.countX = countX;
     this.countAll = countAll;
-    this.test_type = is_RNA;
+    this.test_type = test_type;
     this.to_RNA = to_RNA;
     this.to_DNA = to_DNA;
     this.toggle_RNA = toggle_RNA;
