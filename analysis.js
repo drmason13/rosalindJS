@@ -2,12 +2,18 @@ function countX(char){
     /* str -> int
     Method of basic object.
     Returns number of times char appears in this string
-    char is a single character
+    char is a single character.
+    If more than one character is supplied, return undefined
     */
+    if (char.length != 1){
+        return undefined;
+    }
     var i = 0;
     var count = 0;
     for (i = 0; i < this.length; i++) {
-    if (this.DNA.charAt(i).toUpperCase() == char) {count ++;}
+        if (this.DNA.charAt(i).toUpperCase() == char){
+            count ++;
+        }
     }
     return count;
 }
@@ -48,9 +54,13 @@ function show_RNA(DNA){
     var RNA = [];
     for (i = 0; i < DNA.length; i++) {
         current = DNA.charAt(i).toUpperCase();
-        if (current == 'T') {RNA.push('U');}
-        else {RNA.push(current);}
+        if (current == 'T'){
+            RNA.push('U');
         }
+        else {
+            RNA.push(current);
+        }
+    }
     return RNA.join('');
 }
 
@@ -58,11 +68,15 @@ function to_RNA(){
     this.DNA = this.RNA;
 }
 
-function basic(DNA, id = 0){
+exports.basic = function basic(DNA, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
     DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
+    id is optionally supplied separately as second argument.
     */
+    if (id == undefined) {
+        id = 0;
+    }
     this.length = DNA.length;
     this.countX = countX;
     this.countAll = countAll;
@@ -71,4 +85,4 @@ function basic(DNA, id = 0){
     this.to_RNA = to_RNA;
     this.is_RNA = is_RNA;
     this.id = id;
-}
+};
