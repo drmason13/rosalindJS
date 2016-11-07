@@ -46,8 +46,8 @@ function countAll(){
 }
 
 function to_RNA(){
-        /* str -> str
-    Returns DNA with all instances of 'T' replaced with 'U'
+        /*
+    Returns string with all instances of 'T' replaced with 'U'
     */
     if (this.type == "DNA"){
         var i = 0;
@@ -68,8 +68,8 @@ function to_RNA(){
 }
 
 function to_DNA(){
-        /* str -> str
-    Returns DNA with all instances of 'T' replaced with 'U'
+        /*
+    Returns string with all instances of 'U' replaced with 'T'
     */
     if (this.type == "RNA"){
         var i = 0;
@@ -90,12 +90,69 @@ function to_DNA(){
 }
 
 function toggle_type(){
+    /*
+    Tests type of string and calls to_RNA or to_DNA to switch type
+    */
     if (this.type == "DNA"){
         this.to_RNA();
     }
     else if (this.type == "RNA"){
         this.to_DNA();
     }
+}
+
+function compliment(){
+    /*
+    Returns string with all characters complimented.
+    That is, 'A' <-> 'T' (or 'U' if type RNA)
+             'C' <-> 'G'
+    */
+    var compliments;
+    if (this.type == "DNA"){
+        compliments = {
+            'A' : 'T',
+            'C' : 'G',
+            'G' : 'C',
+            'T' : 'A',
+        };
+    }
+    else if (this.type == "RNA"){
+        compliments = {
+            'A' : 'U',
+            'C' : 'G',
+            'G' : 'C',
+            'U' : 'A',
+        };
+    }
+    
+    var i = 0;
+    var current = '';
+    var joiner = [];
+    for (i = 0; i < this.string.length; i++){
+        current = this.string.charAt(i).toUpperCase();
+        joiner.push(compliments[current]);
+    }
+    this.string = joiner.join('');
+}
+
+function reverseString(){
+    /*
+    Returns string with characters reversed.
+    */
+    var i;
+    var joiner = [];
+    for (i = 0; i < this.string.length; i++){
+        joiner.unshift(this.string.charAt(i).toUpperCase());
+    }
+    this.string = joiner.join('');
+}
+
+function reverseCompliment(){
+    /*
+    calls both reverse and compliment (the order isn't important)
+    */
+    this.compliment();
+    this.reverseString();
 }
 
 exports.basic = function basic(string, id){
@@ -115,6 +172,9 @@ exports.basic = function basic(string, id){
     this.to_DNA = to_DNA;
     this.toggle_type = toggle_type;
     this.id = id;
+    this.compliment = compliment;
+    this.reverseString = reverseString;
+    this.reverseCompliment= reverseCompliment;
     
     //properties
     this.string = string;
