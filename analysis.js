@@ -155,6 +155,25 @@ function reverseCompliment(){
     this.reverseString();
 }
 
+function computeXYcontent(X, Y){
+    /* str, str -> float
+    takes two DNA characters (A,C,G,T or U) and computes the percentage of the
+    string that are those two characters.
+    Defaults to X = C and Y = G to solve Rosalind problem "GC" unless both
+    parameters are provided.
+    http://rosalind.info/problems/gc/
+    */
+    if (X == undefined | Y == undefined){
+        X = 'C';
+        Y = 'G';
+    }
+    var XYcontent = 0;
+    XYcontent += this.countX(X);
+    XYcontent += this.countX(Y);
+    var total = this.length;
+    return (XYcontent / total) * 100;
+}
+
 exports.DNA = function DNA(string, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
@@ -171,13 +190,14 @@ exports.DNA = function DNA(string, id){
     this.to_RNA = to_RNA;
     this.to_DNA = to_DNA;
     this.toggle_type = toggle_type;
-    this.id = id;
     this.compliment = compliment;
     this.reverseString = reverseString;
     this.reverseCompliment= reverseCompliment;
+    this.computeXYcontent = computeXYcontent;
     
     //properties
     this.string = string;
     this.length = string.length;
     this.type = this.test_type(string);
+    this.id = id;
 };
