@@ -155,7 +155,7 @@ function reverseCompliment(){
     this.reverseString();
 }
 
-exports.basic = function basic(string, id){
+exports.DNA = function DNA(string, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
     DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
