@@ -1,0 +1,25 @@
+{
+  "name": "rosalindjs",
+  "version": "1.0.0",
+  "description": "Rosalind problems solved with javascript code.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drmason13/rosalindJS.git"
+  },
+  "keywords": [
+    "rosalind"
+  ],
+  "author": "drmason13",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/drmason13/rosalindJS/issues"
+  },
+  "homepage": "https://github.com/drmason13/rosalindJS#readme",
+  "dependencies": {
+    "clipboard": "^1.5.15"
+  }
+}
