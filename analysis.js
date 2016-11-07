@@ -89,7 +89,7 @@ function to_DNA(){
     }
 }
 
-function toggle_RNA(){
+function toggle_type(){
     if (this.type == "DNA"){
         this.to_RNA();
     }
@@ -113,7 +113,7 @@ exports.basic = function basic(string, id){
     this.test_type = test_type;
     this.to_RNA = to_RNA;
     this.to_DNA = to_DNA;
-    this.toggle_RNA = toggle_RNA;
+    this.toggle_type = toggle_type;
     this.id = id;
     
     //properties
