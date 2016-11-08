@@ -174,6 +174,24 @@ function computeXYcontent(X, Y){
     return (XYcontent / total) * 100;
 }
 
+function computeHammingDistance(otherDNA){
+    /* DNA -> int
+    calculates the number of characters that differ in the DNA strings of this 
+    and another DNA object provided as a parameter.
+    */
+    if (this.length == otherDNA.length){
+        var i;
+        var counter = 0;
+        for (i = 0; i < this.length; i++){
+            if (this.string.charAt(i) != otherDNA.string.charAt(i)){
+                counter++;
+            }
+        }
+    return counter;
+    }
+    else return "Strings are of different lengths, this is not expected.";
+}
+
 exports.DNA = function DNA(string, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
@@ -194,6 +212,7 @@ exports.DNA = function DNA(string, id){
     this.reverseString = reverseString;
     this.reverseCompliment= reverseCompliment;
     this.computeXYcontent = computeXYcontent;
+    this.computeHammingDistance = computeHammingDistance;
     
     //properties
     this.string = string;
