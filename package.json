@@ -19,7 +19,5 @@
     "url": "https://github.com/drmason13/rosalindJS/issues"
   },
   "homepage": "https://github.com/drmason13/rosalindJS#readme",
-  "dependencies": {
-    "clipboard": "^1.5.15"
-  }
+  "dependencies": {}
 }
