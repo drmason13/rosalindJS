@@ -192,15 +192,43 @@ function computeHammingDistance(otherDNA){
     else return "Strings are of different lengths, this is not expected.";
 }
 
+function importJsonFromFile(path){
+    /* str -> obj
+    Returns a json object by parsing data from a text file located at path.
+    */
+    const fs = require('fs');
+    var data = fs.readFileSync(path,"utf8");
+    return JSON.parse(data);
+}
+
+function showProtein(){
+    var table = this.importJsonFromFile(this.path);
+    var protein = [];
+    var i = 0;
+    var temp;
+    while (i <= this.length){
+        temp = table[this.string.slice(i, i + 3)];
+        if (temp != 'Stop'){
+            protein.push(temp);   
+        }
+        else {
+            break;
+        }
+        i = i + 3;
+    }
+    return protein.join('');
+}
+
 exports.DNA = function DNA(string, id){
     /* str -> obj
     Creates an object containing basic properties for a single DNA string
-    DNA is a string containing many of A,C,G, & T/U and nothing more (no id)
+    string is the DNA, containing many of A,C,G, & T/U and nothing more (no id)
     id is optionally supplied separately as second argument.
     */
     if (id == undefined){
         id = 0;
     }
+    this.path = "./io/RNAcodonTableJSON.txt";
     //methods
     this.countX = countX;
     this.countAll = countAll;
@@ -213,7 +241,8 @@ exports.DNA = function DNA(string, id){
     this.reverseCompliment= reverseCompliment;
     this.computeXYcontent = computeXYcontent;
     this.computeHammingDistance = computeHammingDistance;
-    
+    this.importJsonFromFile = importJsonFromFile;
+    this.showProtein = showProtein;
     //properties
     this.string = string;
     this.length = string.length;
