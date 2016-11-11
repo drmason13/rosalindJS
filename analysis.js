@@ -249,3 +249,127 @@ exports.DNA = function DNA(string, id){
     this.type = this.test_type(string);
     this.id = id;
 };
+
+function incrementId(){
+    /*
+    creates a new id based on the current count, call after increasing count
+    check for existing id and increment id again if there is a conflict.
+    */
+    this.idAssign = this.idAssign.slice(0,this.count.toString().length * -1) +
+                    this.count.toString();
+    var i = this.count + 1;
+    while (this.idArray.indexOf(this.idAssign)){
+        this.idAssign = this.idAssign.slice(0,this.i.toString().length * -1) +
+                        this.count.toString();
+        i++;
+    }
+}
+
+function push(DNA){
+    /*
+    inserts DNA at the back of the DNAstore.
+    returns the (potentially changed) id of DNA.
+    */
+    this.count++;
+    if (DNA.id == 0){
+        this.idAssign = this.incrementId();
+        DNA.id = this.idAssign;
+    }
+    this.idArray.push(DNA.id);
+    this[DNA.id] = DNA;
+    // count - 1 to account for 0 indexing
+    this[this.count - 1] = DNA;
+    return DNA.id;
+}
+
+function unshift(DNA){
+    /*
+    inserts DNA at the front of the DNAstore.
+    returns the (potentially changed) id of DNA.
+    */
+    this.count++;
+    if (DNA.id == 0){
+        this.idAssign = this.incrementId();
+        DNA.id = this.idAssign;
+    }
+    this.idArray.unshift(DNA.id);
+    this[DNA.id] = DNA;
+    var i;
+    for (i = this.count; i >= 0; i--){
+        this[i + 1] = this[i];
+    }
+    this[0] = DNA;
+    return DNA.id;
+}
+
+function pop(){
+    /*
+    removes and returns the DNA object from the back of the DNAstore.
+    */
+    this.count--;
+    delete this[this.idArray.pop()];
+    delete this[this.count];
+}
+
+function shift(){
+    /*
+    removes and returns the DNA object from the front of the DNAstore.
+    */
+    this.count--;
+    delete this[this.idArray.shift()];
+    var i;
+    for (i = this.count; i >= 0; i--){
+        this[i + 1] = this[i];
+    }
+}
+
+function rosalind_gc(){
+    var temp = this.idArray;
+    var answer = temp.reduce((dnaX, dnaY)=>{
+    if (this[dnaX].computeXYcontent() > this[dnaY].computeXYcontent()){
+            return dnaX;
+        }
+        else {
+            return dnaY;
+        }
+    });
+    return this[answer];
+}
+
+function rosalind_grph(){
+}
+
+exports.DNAstore = function DNAstore(array){
+    /* [objs] -> obj
+    object definition for a collection of unique (ID) DNA objects.
+    Methods for solving problems that require calculation with a number of DNA
+    strings.
+    array is an optional argument to supply a number of DNA objects contained in
+    an array upon creation.
+    DNA objects within DNAstore can be accessed via method "pop", index or the
+    id of the DNA object.
+    */
+    if (array == undefined){
+        array = [];
+    }
+    //methods
+    this.push = push;
+    this.unshift = unshift;
+    this.pop = pop;
+    this.shift = shift;
+    this.incrementId = incrementId;
+    
+// rosalind problem solution methods
+    this.rosalind_gc = rosalind_gc;
+    this.rosalind_grph = rosalind_grph;
+    
+    //properties (note: IDs of DNA in the store are stored as properties)
+    this.count = array.length;
+    this.idAssign = "rosalind_0000";
+    
+    // push each DNA in array into DNAstore, maintaining original order.
+    var i;
+    for (i = array.length - 1; i >= 0; i--){
+        this.push(array[i]);
+    }
+};
